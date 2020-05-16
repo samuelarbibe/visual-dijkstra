@@ -1,4 +1,4 @@
-# Visual_Dijkstra
+# Visual Dijkstra
 A p5.js Dijkstra's shortest path algorithm visualization
 
 ## Table of contents
@@ -10,7 +10,7 @@ A p5.js Dijkstra's shortest path algorithm visualization
 * [Contact](#contact)
 
 ## General Info
-This project is a small self-reminder of the dijkstra algorith.
+This project is a small self-reminder of the dijkstra algorithm.
 
 Plus, it can be used as a way to learn dijkstra using the color codes.
 Some people, like me, may find it easier to learn from a visualization of an algorithm rather then reading it.

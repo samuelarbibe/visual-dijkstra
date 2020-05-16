@@ -1,8 +1,8 @@
 /// <reference path="./libraries/p5.d/p5.global-mode.d.ts" />
 
-const WINDOW_W = 500;
-const WINDOW_H = 500;
-var nodeCount = 200;
+const WINDOW_W = 1000;
+const WINDOW_H = 1000;
+var nodeCount = 1000;
 var graph = [];
 var currentNode = null;
 var selectedNode = null;
@@ -13,23 +13,69 @@ var speed = 1;
 var slider;
 var checkBox;
 var drawEdges = true;
+var cont;
+var button;
+var div1, div2, p1, p2;
 
 
 function setup() {
-    createCanvas(WINDOW_W, WINDOW_H);
+    cont = createDiv('');
+    div1 = createDiv('');
+    div2 = createDiv('');
+
+    div1.child(createCanvas(WINDOW_W, WINDOW_H));
+
+    div2.style('display', 'flex');
+    div2.style('flex-direction', 'row');
+    div2.style('justify-content', 'left');
+    div2.style('align-items', 'center');
+    div2.style('padding', '10px');
+
+    p1 = createP('Visit speed: ');
+    p1.style('margin', '0px');
+    p1.style('padding-left', '10px');
 
     slider = createSlider(1, 60, 1);
-    slider.position(10, WINDOW_H + 10);
-    slider.style('width', '80px');
+    slider.style('width', '200px');
+    slider.style('margin-right', '40px');
+    slider.style('margin-left', '20px');
+    slider.style('vertical-align', 'middle');
 
-    checkBox = createCheckbox('Draw all Edges', false);
-    checkBox.position(100, WINDOW_H + 10)
+    checkBox = createCheckbox('', false);
     checkBox.checked(true);
     checkBox.changed(function() {
         drawEdges = checkBox.checked();
     });
 
+    p2 = createP('Draw all Edges');
+    p2.style('margin', '0px');
+    p2.style('padding-left', '10px');
 
+    button = createButton('Reset');
+    button.addClass('btn btn-primary');
+    button.style('margin-left', '30px');
+    button.mousePressed(reset);
+
+    div2.child(p1);
+    div2.child(slider);
+    div2.child(checkBox);
+    div2.child(p2);
+    div2.child(p2);
+    div2.child(button);
+
+    cont.child(div1);
+    cont.child(div2);
+
+    cont.style('display', 'flex');
+    cont.style('flex-direction', 'column');
+    cont.style('flex-wrap', 'wrap');
+
+    generateGraph();
+}
+
+
+function generateGraph()
+{
     // generate random nodes
     for (let i = 0; i < nodeCount; i++) {
         graph.push(new Node(random(10, WINDOW_W - 10), random(10, WINDOW_H - 10)));
@@ -57,6 +103,16 @@ function setup() {
     sourceNode.dist = 0;
 }
 
+function reset()
+{
+    graph.length = 0;
+    sourceNode = null;
+    selectedNode = null;
+    currentNode = null;
+    done = false;
+    visitedCount = 0;
+    generateGraph();
+}
 
 function dijkstra(currentNode) {
     var v;
@@ -142,12 +198,18 @@ function draw() {
 
     push();
     fill(0);
-    rect(0,0, 150, 40);
+    rect(0, 0, 300, 80);
     fill(240);
-    textSize(10);
+    textSize(20);
     var s = "Nodes Completed: " + visitedCount + "/" + nodeCount;
-    text(s, 5, 15);
+    text(s, 10, 30);
     s = "Time per visit: " + int(1000 / speed) + "ms";
-    text(s, 5, 30);
+    text(s, 10, 60);
+
+    fill(240, 0, 0);
+    const progress = visitedCount/nodeCount;
+    rect(0, WINDOW_H - 7, WINDOW_W * progress, 7);
     pop();
+
+
 }

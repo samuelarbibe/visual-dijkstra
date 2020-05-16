@@ -1,5 +1,7 @@
 # Visual Dijkstra
 A p5.js Dijkstra's shortest path algorithm visualization
+* [Try it out](https://samuelarbibe.github.io/visual-dijkstra/)
+
 
 ## Table of contents
 * [General info](#general-info)
